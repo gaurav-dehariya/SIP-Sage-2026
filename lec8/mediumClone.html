@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Medium</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Georgia', serif; background: #fff; color: #242424; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+  /* ══════════ TOP NAVBAR ══════════ */
+  .top-nav {
+    height: 57px;
+    border-bottom: 1px solid #e6e6e6;
+    display: flex; align-items: center;
+    padding: 0 20px; gap: 12px;
+    position: sticky; top: 0;
+    background: #fff; z-index: 200;
+  }
+  .hamburger { font-size: 18px; color: #333; cursor: pointer; background: none; border: none; padding: 4px; }
+  .logo { font-family: 'Georgia', serif; font-size: 26px; font-weight: 700; color: #000; text-decoration: none; letter-spacing: -1px; }
+  .search-box {
+    display: flex; align-items: center; gap: 8px;
+    background: #f9f9f9; border-radius: 20px;
+    padding: 7px 16px; width: 230px;
+    border: 1px solid #e6e6e6;
+  }
+  .search-box input { border: none; background: transparent; outline: none; font-size: 14px; color: #333; width: 100%; }
+  .search-box i { color: #888; font-size: 13px; flex-shrink: 0; }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .btn-getapp {
+    background: #000; color: #fff; border: none;
+    border-radius: 20px; padding: 8px 16px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: background .15s;
+  }
+  .btn-getapp:hover { background: #333; }
+  .btn-write {
+    background: none; border: none; color: #333;
+    font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+    padding: 6px 8px; border-radius: 4px;
+    transition: color .15s;
+  }
+  .btn-write:hover { color: #000; }
+  .nav-bell { font-size: 18px; color: #555; cursor: pointer; }
+  .nav-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    overflow: hidden; cursor: pointer; flex-shrink: 0;
+  }
+  .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .nav-avatar-placeholder {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; font-size: 14px; cursor: pointer;
+  }
+
+  /* ══════════ LAYOUT ══════════ */
+  .page-layout { display: flex; min-height: calc(100vh - 57px); }
+
+  /* ── LEFT SIDEBAR ── */
+  .left-sidebar {
+    width: 220px; flex-shrink: 0;
+    border-right: 1px solid #e6e6e6;
+    padding: 28px 0;
+    position: sticky; top: 57px;
+    height: calc(100vh - 57px);
+    overflow-y: auto;
+  }
+  .side-nav-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 24px;
+    font-size: 15px; color: #555;
+    text-decoration: none; cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: color .15s;
+  }
+  .side-nav-item:hover { color: #000; }
+  .side-nav-item.active { color: #000; font-weight: 600; border-left-color: #000; }
+  .side-nav-item i { font-size: 17px; width: 20px; text-align: center; }
+  .side-sep { height: 1px; background: #e6e6e6; margin: 12px 24px; }
+  .side-sub-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 24px; font-size: 14px; color: #555;
+    text-decoration: none; cursor: pointer;
+    transition: color .15s;
+  }
+  .side-sub-item:hover { color: #000; }
+  .side-sub-item i { font-size: 15px; width: 18px; text-align: center; }
+
+  /* ══════════ MAIN CONTENT ══════════ */
+  .main-content { flex: 1; min-width: 0; padding: 0 40px; max-width: 760px; }
+
+  /* ── BANNER ── */
+  .member-banner {
+    background: #faf0e8;
+    border-bottom: 1px solid #f0e0d0;
+    padding: 12px 20px;
+    display: flex; align-items: center; justify-content: center; gap-6: 0;
+    position: relative; font-size: 14px; color: #333;
+  }
+  .member-banner .close-btn {
+    position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; font-size: 18px; color: #888; cursor: pointer;
+  }
+  .member-banner a { color: #000; font-weight: 600; text-decoration: underline; }
+  .member-banner .star { color: #f59e0b; margin-right: 6px; }
+
+  /* ── TABS ── */
+  .feed-tabs {
+    display: flex; gap: 0;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 0; margin: 20px 0 0;
+    position: sticky; top: 57px; background: #fff; z-index: 100;
+  }
+  .tab-btn {
+    padding: 14px 20px 12px;
+    font-size: 14px; color: #888;
+    background: none; border: none; cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color .15s;
+    font-weight: 500;
+  }
+  .tab-btn:hover { color: #000; }
+  .tab-btn.active { color: #000; border-bottom-color: #000; }
+
+  /* ── ARTICLE CARD ── */
+  .article-card {
+    padding: 28px 0;
+    border-bottom: 1px solid #e6e6e6;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 13px; color: #555;
+  }
+  .meta-avatar {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .meta-pub-logo {
+    width: 24px; height: 24px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0;
+  }
+  .meta-dot { color: #ccc; }
+  .article-body { display: flex; gap: 16px; align-items: flex-start; }
+  .article-text { flex: 1; min-width: 0; }
+  .article-title { font-size: 20px; font-weight: 700; color: #000; line-height: 1.35; margin-bottom: 6px; font-family: 'Georgia', serif; }
+  .article-sub { font-size: 15px; color: #555; line-height: 1.5; }
+  .article-thumb {
+    width: 140px; height: 96px; flex-shrink: 0;
+    border-radius: 4px; overflow: hidden; background: #eee;
+  }
+  .article-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .thumb-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+
+  .article-actions {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 13px; color: #888;
+  }
+  .action-group { display: flex; align-items: center; gap: 5px; cursor: pointer; transition: color .15s; }
+  .action-group:hover { color: #333; }
+  .action-icon { font-size: 14px; }
+  .boost-badge {
+    display: flex; align-items: center; gap: 4px;
+    color: #f59e0b; font-weight: 500;
+  }
+  .action-sep { margin-left: auto; display: flex; gap: 10px; }
+  .action-sep .action-group { color: #aaa; }
+
+  /* ══════════ RIGHT SIDEBAR ══════════ */
+  .right-sidebar {
+    width: 340px; flex-shrink: 0;
+    padding: 28px 32px;
+    border-left: 1px solid #e6e6e6;
+    position: sticky; top: 57px;
+    height: calc(100vh - 57px);
+    overflow-y: auto;
+  }
+  .rs-title { font-size: 15px; font-weight: 700; color: #000; margin-bottom: 16px; }
+
+  /* Staff picks */
+  .pick-item { margin-bottom: 20px; }
+  .pick-author { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .pick-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .pick-author-name { font-size: 13px; font-weight: 600; color: #000; }
+  .verified { color: #1a8917; font-size: 12px; margin-left: 3px; }
+  .pick-title { font-size: 15px; font-weight: 700; color: #000; line-height: 1.35; margin-bottom: 4px; cursor: pointer; }
+  .pick-title:hover { text-decoration: underline; }
+  .pick-meta { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #888; }
+  .pick-star { color: #f59e0b; font-size: 12px; }
+  .see-full { font-size: 14px; color: #1a8917; cursor: pointer; font-weight: 500; }
+  .see-full:hover { text-decoration: underline; }
+
+  .rs-sep { height: 1px; background: #e6e6e6; margin: 24px 0; }
+
+  /* Topics */
+  .topic-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .topic-pill {
+    padding: 7px 16px; background: #f2f2f2;
+    border-radius: 20px; font-size: 13px; color: #333;
+    cursor: pointer; border: none; transition: background .15s;
+    font-weight: 500;
+  }
+  .topic-pill:hover { background: #e0e0e0; }
+
+  /* ── responsive ── */
+  @media (max-width: 1100px) { .right-sidebar { display: none; } }
+  @media (max-width: 768px)  { .left-sidebar { display: none; } .main-content { padding: 0 16px; } }
+</style>
+</head>
+<body>
+
+<!-- ══════════ TOP NAVBAR ══════════ -->
+<nav class="top-nav">
+  <button class="hamburger"><i class="fa fa-bars"></i></button>
+  <a class="logo" href="#">Medium</a>
+
+  <div class="search-box">
+    <i class="fa fa-search"></i>
+    <input type="text" placeholder="Search" />
+  </div>
+
+  <div class="nav-right">
+    <button class="btn-getapp"><i class="fa fa-th-large"></i> Get app</button>
+    <button class="btn-write"><i class="fa fa-pen-to-square"></i> Write</button>
+    <i class="nav-bell fa fa-bell"></i>
+    <div class="nav-avatar-placeholder">U</div>
+  </div>
+</nav>
+
+<!-- ══════════ MEMBER BANNER ══════════ -->
+<div class="member-banner" id="memberBanner">
+  <span class="star">✦</span>
+  Get unlimited access to the best of Medium for less than $1/week.&nbsp;
+  <a href="#">Become a member</a>
+  <button class="close-btn" onclick="document.getElementById('memberBanner').style.display='none'">×</button>
+</div>
+
+<!-- ══════════ PAGE LAYOUT ══════════ -->
+<div class="page-layout">
+
+  <!-- ─── LEFT SIDEBAR ─── -->
+  <aside class="left-sidebar">
+    <a class="side-nav-item active" href="#">
+      <i class="fa fa-house"></i> Home
+    </a>
+    <a class="side-nav-item" href="#">
+      <i class="fa fa-bookmark"></i> Library
+    </a>
+    <a class="side-nav-item" href="#">
+      <i class="fa fa-user"></i> Profile
+    </a>
+    <a class="side-nav-item" href="#">
+      <i class="fa fa-file-lines"></i> Stories
+    </a>
+    <a class="side-nav-item" href="#">
+      <i class="fa fa-chart-bar"></i> Stats
+    </a>
+    <div class="side-sep"></div>
+    <a class="side-sub-item" href="#">
+      <i class="fa fa-user-group"></i> Following
+    </a>
+    <div class="side-sep"></div>
+    <a class="side-sub-item" href="#">
+      <i class="fa fa-plus"></i> Find writers and<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;publications to follow.
+    </a>
+    <a class="side-sub-item" href="#" style="color:#1a8917;font-weight:500;">
+      See suggestions
+    </a>
+  </aside>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <main class="main-content">
+
+    <!-- Tabs -->
+    <div class="feed-tabs">
+      <button class="tab-btn active" onclick="switchTab(this)">For you</button>
+      <button class="tab-btn" onclick="switchTab(this)">Featured</button>
+    </div>
+
+    <!-- ── Article 1 ── -->
+    <div class="article-card">
+      <div class="article-meta">
+        <div class="meta-avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6);">L</div>
+        <span style="font-weight:600;color:#000;">Leo Godin</span>
+        <span class="meta-dot">·</span>
+        <span>Mar 2</span>
+      </div>
+      <div class="article-body">
+        <div class="article-text">
+          <div class="article-title">Claude Code is Great</div>
+          <div class="article-sub">You Just Need to Learn How to Use It</div>
+        </div>
+        <div class="article-thumb">
+          <div class="thumb-placeholder" style="background:linear-gradient(135deg,#1e1b4b,#312e81);color:#a5b4fc;flex-direction:column;gap:4px;font-size:12px;font-weight:700;padding:10px;text-align:center;">
+            <div style="font-size:20px;">🤖</div>
+            <div class="article-thumb">
+    <img
+        src="https://img.magnific.com/free-photo/high-angle-view-cropped-employee-work-with-laptop_1098-20470.jpg?semt=ais_hybrid&w=740&q=80"
+        alt="Article Thumbnail"
+        class="thumb-image"
+    >
+</div>
+            <div>Using LLMs<br>is a Skill</div>
+          </div>
+        </div>
+      </div>
+      <div class="article-actions">
+        <div class="boost-badge"><i class="fa fa-star action-icon"></i></div>
+        <div class="action-group"><i class="fa fa-hands-clapping action-icon"></i> 5.2K</div>
+        <div class="action-group"><i class="fa fa-comment action-icon"></i> 150</div>
+        <div class="action-group"><i class="fa fa-retweet action-icon"></i> 87</div>
+        <div class="action-sep">
+          <div class="action-group"><i class="fa fa-thumbs-down action-icon"></i></div>
+          <div class="action-group"><i class="fa fa-bookmark action-icon"></i></div>
+          <div class="action-group"><i class="fa fa-ellipsis action-icon"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Article 2 ── -->
+    <div class="article-card">
+      <div class="article-meta">
+        <div class="meta-pub-logo" style="background:linear-gradient(135deg,#f97316,#ea580c);border-radius:4px;font-size:9px;">DSC</div>
+        <span>In</span>
+        <span style="font-weight:600;color:#000;">Data Science Collective</span>
+        <span>by</span>
+        <span style="font-weight:500;">Marina Wyss</span>
+        <span class="meta-dot">·</span>
+        <span>Feb 23</span>
+      </div>
+      <div class="article-body">
+        <div class="article-text">
+          <div class="article-title">Should You Still Learn to Code in 2026?</div>
+          <div class="article-sub">The answer isn't as obvious as I used to believe.</div>
+        </div>
+        <div class="article-thumb">
+            <div class="article-thumb">
+    <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfUk2F9fO1ZLtvt2_QSIutY_CkHTYT6Ihng2_26d282tNsnxi9oUHLGQA&s"
+        alt="Article Thumbnail"
+        class="thumb-image"
+    >
+</div>
+          <div class="thumb-placeholder" style="background:linear-gradient(135deg,#065f46,#047857);color:#a7f3d0;flex-direction:column;gap:4px;font-size:22px;">
+            👨‍💻
+          </div>
+        </div>
+      </div>
+      <div class="article-actions">
+        <div class="boost-badge"><i class="fa fa-star action-icon"></i></div>
+        <div class="action-group"><i class="fa fa-hands-clapping action-icon"></i> 3.6K</div>
+        <div class="action-group"><i class="fa fa-comment action-icon"></i> 178</div>
+        <div class="action-group"><i class="fa fa-retweet action-icon"></i> 94</div>
+        <div class="action-sep">
+          <div class="action-group"><i class="fa fa-thumbs-down action-icon"></i></div>
+          <div class="action-group"><i class="fa fa-bookmark action-icon"></i></div>
+          <div class="action-group"><i class="fa fa-ellipsis action-icon"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Article 3 ── -->
+    <div class="article-card">
+      <div class="article-meta">
+        <div class="meta-pub-logo" style="background:#1a1a1a;border-radius:4px;font-size:11px;font-weight:800;color:#fff;">B</div>
+        <span>In</span>
+        <span style="font-weight:600;color:#000;">Books Are Our Superpower</span>
+        <span>by</span>
+        <span style="font-weight:500;">Desiree Peralta</span>
+        <i class="fa fa-circle-check" style="color:#1a8917;font-size:12px;"></i>
+        <span class="meta-dot">·</span>
+        <span>Mar 9</span>
+      </div>
+      <div class="article-body">
+        <div class="article-text">
+          <div class="article-title">"Women Are Basically Reading Porn"</div>
+          <div class="article-sub">And other misogynistic comments I receive when I say I'm a fiction reader</div>
+        </div>
+        <div class="article-thumb">
+            <div class="article-thumb">
+    <img
+        src="data:image/jpeg;base64,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"
+        alt="Article Thumbnail"
+        class="thumb-image"
+    >
+</div>
+          <div class="thumb-placeholder" style="background:linear-gradient(135deg,#7c2d12,#9a3412);color:#fed7aa;font-size:28px;">📚</div>
+        </div>
+      </div>
+      <div class="article-actions">
+        <div class="boost-badge"><i class="fa fa-star action-icon"></i></div>
+        <div class="action-group"><i class="fa fa-hands-clapping action-icon"></i> 6K</div>
+        <div class="action-group"><i class="fa fa-comment action-icon"></i> 305</div>
+        <div class="action-group"><i class="fa fa-retweet action-icon"></i> 167</div>
+        <div class="action-sep">
+          <div class="action-group"><i class="fa fa-thumbs-down action-icon"></i></div>
+          <div class="action-group"><i class="fa fa-bookmark action-icon"></i></div>
+          <div class="action-group"><i class="fa fa-ellipsis action-icon"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Article 4 ── -->
+    <div class="article-card">
+      <div class="article-meta">
+        <div class="meta-avatar" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);">A</div>
+        <span style="font-weight:600;color:#000;">Alex Rivera</span>
+        <i class="fa fa-circle-check" style="color:#1a8917;font-size:12px;"></i>
+        <span class="meta-dot">·</span>
+        <span>Jun 10</span>
+      </div>
+      <div class="article-body">
+        <div class="article-text">
+          <div class="article-title">The Quiet Genius of Boring Software</div>
+          <div class="article-sub">The most reliable tools are the ones nobody talks about.</div>
+        </div>
+        <div class="article-thumb">
+          <div class="thumb-placeholder" style="background:linear-gradient(135deg,#1e293b,#334155);color:#94a3b8;font-size:28px;">⚙️</div>
+        </div>
+      </div>
+      <div class="article-actions">
+        <div class="boost-badge"><i class="fa fa-star action-icon"></i></div>
+        <div class="action-group"><i class="fa fa-hands-clapping action-icon"></i> 4.1K</div>
+        <div class="action-group"><i class="fa fa-comment action-icon"></i> 92</div>
+        <div class="action-group"><i class="fa fa-retweet action-icon"></i> 61</div>
+        <div class="action-sep">
+          <div class="action-group"><i class="fa fa-thumbs-down action-icon"></i></div>
+          <div class="action-group"><i class="fa fa-bookmark action-icon"></i></div>
+          <div class="action-group"><i class="fa fa-ellipsis action-icon"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Article 5 ── -->
+    <div class="article-card">
+      <div class="article-meta">
+        <div class="meta-pub-logo" style="background:linear-gradient(135deg,#7c3aed,#6d28d9);border-radius:4px;font-size:9px;font-weight:800;">ML</div>
+        <span>In</span>
+        <span style="font-weight:600;color:#000;">ML Engineer Weekly</span>
+        <span>by</span>
+        <span style="font-weight:500;">Priya Nair</span>
+        <span class="meta-dot">·</span>
+        <span>Jun 8</span>
+      </div>
+      <div class="article-body">
+        <div class="article-text">
+          <div class="article-title">Why Your RAG Pipeline is Lying to You</div>
+          <div class="article-sub">Retrieval-Augmented Generation sounds smart until it confidently hallucinates your data.</div>
+        </div>
+        <div class="article-thumb">
+          <div class="thumb-placeholder" style="background:linear-gradient(135deg,#4c1d95,#5b21b6);color:#c4b5fd;font-size:28px;">🧠</div>
+        </div>
+      </div>
+      <div class="article-actions">
+        <div class="boost-badge"><i class="fa fa-star action-icon"></i></div>
+        <div class="action-group"><i class="fa fa-hands-clapping action-icon"></i> 7.8K</div>
+        <div class="action-group"><i class="fa fa-comment action-icon"></i> 241</div>
+        <div class="action-group"><i class="fa fa-retweet action-icon"></i> 188</div>
+        <div class="action-sep">
+          <div class="action-group"><i class="fa fa-thumbs-down action-icon"></i></div>
+          <div class="action-group"><i class="fa fa-bookmark action-icon"></i></div>
+          <div class="action-group"><i class="fa fa-ellipsis action-icon"></i></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ─── RIGHT SIDEBAR ─── -->
+  <aside class="right-sidebar">
+
+    <!-- Staff Picks -->
+    <div class="rs-title">Staff Picks</div>
+
+    <div class="pick-item">
+      <div class="pick-author">
+        <div class="pick-avatar" style="background:linear-gradient(135deg,#f97316,#ea580c);">D</div>
+        <span class="pick-author-name">devin bambrick</span>
+      </div>
+      <div class="pick-title">Gatori Fishing in America</div>
+      <div class="pick-meta"><span>5d ago</span></div>
+    </div>
+
+    <div class="pick-item">
+      <div class="pick-author">
+        <div class="pick-avatar" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);">J</div>
+        <span class="pick-author-name">John DeVore</span>
+        <i class="fa fa-circle-check verified"></i>
+      </div>
+      <div class="pick-title">Cigarettes are bad. I miss them.</div>
+      <div class="pick-meta">
+        <span class="pick-star">✦</span>
+        <span>May 29</span>
+      </div>
+    </div>
+
+    <div class="pick-item">
+      <div class="pick-author">
+        <div class="pick-avatar" style="background:#1a1a1a;border-radius:4px;font-size:9px;font-weight:800;">BC</div>
+        <span style="font-size:13px;color:#555;">In <strong style="color:#000;">Bootcamp</strong> by <strong style="color:#000;">Divya Sabade</strong></span>
+      </div>
+      <div class="pick-title">I Sat in Engineering Meetings for Two Years Without Understanding What a Branch Was</div>
+      <div class="pick-meta">
+        <span class="pick-star">✦</span>
+        <span>6d ago</span>
+      </div>
+    </div>
+
+    <div class="pick-item">
+      <div class="pick-author">
+        <div class="pick-avatar" style="background:linear-gradient(135deg,#10b981,#059669);">S</div>
+        <span class="pick-author-name">Sara Kim</span>
+        <i class="fa fa-circle-check verified"></i>
+      </div>
+      <div class="pick-title">The Uncomfortable Truth About Remote Work Productivity</div>
+      <div class="pick-meta">
+        <span class="pick-star">✦</span>
+        <span>4d ago</span>
+      </div>
+    </div>
+
+    <div class="see-full">See the full list</div>
+
+    <div class="rs-sep"></div>
+
+    <!-- Recommended Topics -->
+    <div class="rs-title">Recommended topics</div>
+    <div class="topic-pills">
+      <button class="topic-pill">Technology</button>
+      <button class="topic-pill">Relationships</button>
+      <button class="topic-pill">Self Improvement</button>
+      <button class="topic-pill">Writing</button>
+      <button class="topic-pill">Machine Learning</button>
+      <button class="topic-pill">Politics</button>
+      <button class="topic-pill">Cryptocurrency</button>
+      <button class="topic-pill">Health</button>
+      <button class="topic-pill">Productivity</button>
+      <button class="topic-pill">Design</button>
+    </div>
+
+    <div class="rs-sep"></div>
+
+    <!-- Footer links -->
+    <div style="font-size:13px;color:#888;line-height:2;">
+      <a href="#" style="color:#888;text-decoration:none;margin-right:10px;">Help</a>
+      <a href="#" style="color:#888;text-decoration:none;margin-right:10px;">Status</a>
+      <a href="#" style="color:#888;text-decoration:none;margin-right:10px;">About</a>
+      <a href="#" style="color:#888;text-decoration:none;margin-right:10px;">Careers</a>
+      <a href="#" style="color:#888;text-decoration:none;margin-right:10px;">Blog</a>
+      <a href="#" style="color:#888;text-decoration:none;margin-right:10px;">Press</a>
+      <a href="#" style="color:#888;text-decoration:none;margin-right:10px;">Privacy</a>
+      <a href="#" style="color:#888;text-decoration:none;margin-right:10px;">Terms</a>
+    </div>
+
+  </aside>
+</div><!-- /page-layout -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function switchTab(btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // Clap animation
+  document.querySelectorAll('.action-group').forEach(g => {
+    g.addEventListener('click', function() {
+      this.style.color = '#000';
+      this.style.transform = 'scale(1.2)';
+      setTimeout(() => { this.style.transform = ''; }, 200);
+    });
+  });
+
+  // Bookmark toggle
+  document.querySelectorAll('.fa-bookmark').forEach(icon => {
+    icon.addEventListener('click', function() {
+      this.classList.toggle('fa-solid');
+      this.style.color = this.classList.contains('fa-solid') ? '#000' : '';
+    });
+  });
+</script>
+</body>
+</html>

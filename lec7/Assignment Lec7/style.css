@@ -1,0 +1,135 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f2f2f2;
+}
+
+/* Main Layout */
+.container{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+/* Left Images */
+.image-stack{
+    position:relative;
+    width:450px;
+    height:500px;
+}
+
+.image{
+    position:absolute;
+    left:50px;
+    transition:0.5s ease;
+}
+
+.image img{
+    width:300px;
+    border-radius:20px;
+    display:block;
+}
+
+/* Image Positions */
+.top{
+    top:0;
+    opacity:0.3;
+}
+
+.upper{
+    top:80px;
+    opacity:0.5;
+}
+
+.active{
+    top:170px;
+    left:0;
+    z-index:10;
+    animation:float 3s infinite ease-in-out;
+}
+
+.active img{
+    width:450px;
+}
+
+.lower{
+    top:380px;
+    opacity:0.5;
+}
+
+/* Right Content */
+.content{
+    text-align:center;
+}
+
+.navigation{
+    margin-bottom:40px;
+}
+
+.navigation button{
+    width:50px;
+    height:50px;
+    border:none;
+    border-radius:50%;
+    background:#1d4ed8;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+    margin:0 10px;
+    transition:0.3s;
+}
+
+.navigation button:hover{
+    transform:translateY(-5px);
+}
+
+/* Title */
+.title-row{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+
+.text h1{
+    color:#1d4ed8;
+    font-size:42px;
+}
+
+.text p{
+    color:gray;
+    letter-spacing:3px;
+    margin-top:10px;
+}
+
+
+.image{
+    position:absolute;
+    cursor:pointer;
+    transition:all .4s ease;
+}
+
+.image:hover{
+    transform:translateY(-15px) scale(1.05);
+    z-index:20;
+    opacity:1;
+}
+
+/* Keep active image large */
+.active img{
+    width:450px;
+}
+
+/* Other images */
+.top img,
+.upper img,
+.lower img{
+    width:300px;
+}

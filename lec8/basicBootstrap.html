@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link rel="stylesheet" href="./style.css">
+
+    <title>Canva UI Layout</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body{
+            overflow:hidden;
+            background:#f5f5f5;
+        }
+
+        .topbar{
+            height:60px;
+            background:linear-gradient(to right,#00b4d8,#7b2cbf);
+        }
+
+        .sidebar{
+            width:280px;
+            height:calc(100vh - 60px);
+            background:white;
+            border-right:1px solid #ddd;
+        }
+
+        .canvas-area{
+            flex:1;
+            background:#ececec;
+            padding:30px;
+        }
+
+        .canvas{
+            background:white;
+            height:590px;
+            border-radius:10px;
+            padding:40px;
+        }
+
+        .shape{
+            width:160px;
+            height:160px;
+        }
+
+        .circle{
+            background:#b5ef63;
+            border-radius:50%;
+        }
+
+        .square{
+            background:#efd85d;
+        }
+
+        .triangle{
+            width:0;
+            height:0;
+            border-left:90px solid transparent;
+            border-right:90px solid transparent;
+            border-bottom:160px solid orange;
+        }
+
+        .pentagon{
+            width:160px;
+            height:160px;
+            background:#2200c4;
+            clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%);
+        }
+
+        .plus{
+            font-size:180px;
+            font-weight:bold;
+            line-height:140px;
+        }
+
+        .parallelogram{
+            width:180px;
+            height:150px;
+            background:#c06de0;
+            transform:skew(20deg);
+        }
+
+        .arrow{
+            width:100px;
+            height:120px;
+            background:#8c5cff;
+            clip-path:polygon(30% 45%,30% 100%,70% 100%,70% 45%,100% 45%,50% 0%,0% 45%);
+        }
+
+        .heart{
+            font-size:160px;
+            color:red;
+            line-height:150px;
+        }
+
+        .menu-item{
+            padding:12px 20px;
+            cursor:pointer;
+        }
+
+        .menu-item:hover{
+            background:#f3f3f3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP NAVBAR -->
+    <div class="topbar d-flex align-items-center justify-content-between px-4 text-white">
+
+       <nav class="navbar topbar px-3">
+
+    <!-- Left -->
+    <div class="d-flex align-items-center gap-3">
+
+
+        <button class="btn toolbar-btn">
+            File
+        </button>
+        <div class="menu-item">
+<i class="bi bi-pencil"></i>
+        <span>Resize</span>
+    </div>
+    
+
+        <button class="btn toolbar-btn">
+            Editing
+        </button>
+
+    </div>
+
+    <!-- Center -->
+    <div class="d-flex gap-2">
+
+        <button class="btn icon-btn">
+            <i class="bi bi-arrow-counterclockwise"></i>
+        </button>
+
+        <button class="btn icon-btn">
+            <i class="bi bi-arrow-clockwise"></i>
+        </button>
+
+    </div>
+
+    <!-- Right -->
+    <div class="d-flex align-items-center gap-2">
+
+        <button class="btn icon-btn">
+            <i class="bi bi-chat"></i>
+        </button>
+
+        <button class="btn ai-btn">
+            ✨ Try Canva AI
+        </button>
+
+    </div>
+
+</nav>
+        <div>
+            <button class="btn btn-light btn-sm">
+                Share
+            </button>
+        </div>
+
+    </div>
+
+    <div class="d-flex">
+
+        <!-- LEFT SIDEBAR -->
+        <div class="sidebar">
+
+            <div class="p-3">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Describe your ideal design">
+            </div>
+
+            <div class="px-3 mb-3 d-flex gap-2">
+                <button class="btn btn-light w-50">
+                    Generate
+                </button>
+
+                <button class="btn btn-primary w-50">
+                    Search
+                </button>
+            </div>
+
+            <div class="sidebar">
+
+    <div class="menu-item">
+        <i class="bi bi-grid"></i>
+        <span>Templates</span>
+    </div>
+
+    <div class="menu-item">
+        <i class="bi bi-stars"></i>
+        <span>Elements</span>
+    </div>
+
+    <div class="menu-item">
+        <i class="bi bi-type"></i>
+        <span>Text</span>
+    </div>
+
+    <div class="menu-item">
+<i class="bi bi-collection"></i>
+        <span>Brand</span>
+    </div>
+
+    <div class="menu-item">
+<i class="bi bi-cloud-arrow-up"></i>
+        <span>Uploads</span>
+    </div>
+
+    <div class="menu-item">
+        <i class="bi bi-tools"></i>
+        <span>Tools</span>
+    </div>
+
+    <div class="menu-item">
+        <i class="bi bi-folder"></i>
+        <span>Projects</span>
+    </div>
+
+    <div class="menu-item">
+<i class="bi bi-terminal-plus"></i>
+        <span>Apps</span>
+    </div>
+
+    <div class="menu-item">
+<i class="bi bi-film"></i>
+        <span>Magic Media</span>
+    </div>
+
+    <div class="menu-item">
+<i class="bi bi-music-note-beamed"></i>
+        <span>Audio</span>
+
+</div>
+</div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="canvas-area">
+
+            <div class="canvas">
+
+                <div class="row text-center mb-5">
+
+                    <div class="col">
+                        <div class="circle shape mx-auto"></div>
+                    </div>
+
+                    <div class="col">
+                        <div class="square shape mx-auto"></div>
+                    </div>
+
+                    <div class="col">
+                        <div class="triangle mx-auto"></div>
+                    </div>
+
+                    <div class="col">
+                        <div class="pentagon mx-auto"></div>
+                    </div>
+
+                </div>
+
+                <div class="row text-center mt-5">
+
+                    <div class="col">
+                        <div class="plus">+</div>
+                    </div>
+
+                    <div class="col">
+                        <div class="parallelogram mx-auto"></div>
+                    </div>
+
+                    <div class="col">
+                        <div class="arrow mx-auto"></div>
+                    </div>
+
+                    <div class="col">
+                        <div class="heart">❤</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    
+
+</body>
+</html>

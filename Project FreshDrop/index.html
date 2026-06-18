@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshMart</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+
+        <h2 class="logo">
+            <i class="bi bi-basket2-fill"></i>
+            FreshMart
+        </h2>
+
+        <input type="text" placeholder="Search vegetables, fruits, dairy..." class="search-box">
+
+        <div class="nav-links">
+
+            <a href="#">
+                <i class="bi bi-heart"></i>
+                Wishlist
+            </a>
+
+            <a href="#">
+                <i class="bi bi-cart3"></i>
+                Cart (<span id="cart-count">0</span>)
+            </a>
+
+            <a href="login.html">
+                <i class="bi bi-person"></i>
+                Login
+            </a>
+
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- Banner -->
+    <section class="banner">
+        <div class="offer-card">
+            <h3>Fresh Fruits</h3>
+            <p>Up to 40% Off</p>
+        </div>
+
+        <div class="offer-card">
+            <h3>Dairy Products</h3>
+            <p>Buy 2 Get 1 Free</p>
+        </div>
+
+        <div class="offer-card">
+            <h3>Snacks</h3>
+            <p>Flat ₹50 Off</p>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+
+        <h2>Shop By Category</h2>
+
+        <div class="category-box">
+
+            <div class="category">
+                <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=300">
+                <p>Fruits</p>
+            </div>
+
+            <div class="category">
+                <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300">
+                <p>Vegetables</p>
+            </div>
+
+            <div class="category">
+                <img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=300">
+                <p>Dairy</p>
+            </div>
+
+            <div class="category">
+                <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300">
+                <p>Bakery</p>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- Products -->
+    <section class="products">
+
+        <h2>All Products</h2>
+
+        <div class="product-container">
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500" alt="">
+                <h3>Fresh Milk 1L</h3>
+                <p>₹58</p>
+                <button onclick="addToCart()">Add To Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUSExMWFRUVFRcXFxgVFxcXFxUXFxUWFxgVFhUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGy0lHyUtLS0tLS0tLS0tLy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAbAAACAwEBAQAAAAAAAAAAAAAEBQIDBgABB//EAD0QAAEDAgQDBQcDAgUEAwAAAAEAAhEDBAUSITFBUWEGMnGBkRMiobHB0fAUUuFCchUjM2LxB4LC0haSsv/EABoBAAIDAQEAAAAAAAAAAAAAAAIDAQQFAAb/xAAvEQACAgEEAQMCBQQDAQAAAAAAAQIRAwQSITFBBRNRMmEUIoGx8EJxkaE0wdEj/9oADAMBAAIRAxEAPwBMcShkBIq1R0lx2UGXBkgqRqNynP6Ki0Kvk9tb0alLMRq55Kh+oaXQ3ZGULZkS4oug0jPucptuSBCKxOmwH3UucnrlDDzNqiKdRCSraQRURYZKIpFBsBRVAFCyRtbVGuERryTO2wtjRmcEpw6kQ8aLaXVrmpyBOgSZcD4LiwGypud3dGq19nBncq22r8NvgjCRGm/5qq7m9xMo3F/IsFBsahAPtGvcYCbXAAEnZSwW0NQFzW7TqdNf2jqjeSC5k6XyVsennf3ElENpugqu/qUjMQoYsZe7gRoQeB4g9UFaYXVuH5KTZ5k6Nb1c7h80Utq/M3wN2ua20IL98uPJDtX1Sx/6b24Z/nPe95AktOUNM65RGvLWfJKcW/6cub71tVzD9lSA7wDxofMDxSMfqmmlLbu/XwNfp+dRtIwNQkKttYjimmM4fUpe7UYWOEaHrtrsdjtyKUupujNlOWcswYzASWztMEGOq0otNWiq4tcND3CsXa0ZXBTZfljiWnQrPMRIeYUbEDVG6waoKgzSJQ2L5iYCQYXeOZsUxN2TLiSSlODUrGRa20QpU6jeGiLoucPehE4XY1650aA3xTyrhoptyuGsJOTPGLryTFX0Iv1ruS5F/pBzXLvcj8HWxfb2sS4pZirNVoKzClF3bucJIR7lYpR2oUMZBlG4hVHs9N9EM2gc0KvE2lsA6o6toigB7lW4ri5RJT0gzxEUiqWslX5FxFlzXwiKNz7wVNFvRMcMww1HaBDKvJKNFYUQ4A7LR4fcRDTqFm6+EPYNHQqva1GaqpXPZYjKuzc17FrhICCp2xEj06LN2vax0hrltsLaajQ4tIB2nQn7BV9S44o7pMfii8jqIvtsKdUd74IZxOxceQ+60VJgY0NaIjlwVobG3DbmoO/P5Xm9RqZ5nz0jWw4owXAgxrs5TuKwqOcWT3wwAB0beB4T4JraWzKTAym0NaOA+fU9VcWyuAKGefJOKjJ8IdHFji9yXJ686IdrUS0wVB7RuNuSBKkHGdOimtaNqsNN7Q5jhBB1BVJwG3/T/pfZD2MH3dZBJnMHb5p1zbpkI4KRMqFlnHptc3+oucYydtHxTtH2Wfa1I71N3cfz6OjZw+O46J3W6+8X1myq1zKgDmngec7g8D1Xz3tBgPsDJbLCfdcOPQ8jovT6H1L3Uoz+r9zF1ej2PdDr9jHUqScWdmC3VDvAGygLpw2Wo3ZQod4dj77f3QAUXc42+tqWkJPhNIOMkStE63aG7Qq88WPdb7FyntFvtyuVvs2rlG2PyD7n2DKFdmTfXkk1xfCSIQ1gH5J3VdTXxU7KY1SbAbt5nM3RVOpPq8ForXC84l2ia2NtSYQNDCL3Ugo47MScGcNSFS6xhfQ8ULC2AFjry3cXQEUMrl2ROO0Es7IOPPwT9nZuW5oKY9nrSlSGZ+p6p3WvmEe6NF05+bE7ndUfP20w12WOK2XZ32bRJiUuuKDXOmNVMNyhKnLcNjw7HF3VDnabboerQZGu8eiDt7k8lO5rmEqmOU12xTZYSKt2yn/TOZ39rNSPPQea+o0riZE+P3WT7JW0CpXc3ve4w9AZd8co/wC1N2VCHSsb1HI8uTan9Kr9fP8A4bvp2n/+W75/iHYcudzVVKpMQuqugGVk0WtvNFkypAfnoqrW6B0OoiOo328yr3042Mg7EcUbjSsCVp0yD2ky4bCJHKenL+FWFdpy9PDfVQezkobXg6L8Mrc0t1GomNNirGuBGiqqPgeKGoV5fA6ypcb5QxRbVhjiqbim17Sx4Badwfur3HRJr3EJeKdLUnf6+A6qccZN/lJjDdw0YHtHhbqFXTWm6crv/F3Jw+PyT5dV9ZqYQ2pTcyrJDhqJ2O4II4gr5riGGvpVn0XaluztszT3XD83B5L0+g1izLY/qX+/uYOu0vtS3Q+l/wCj21xEMIEfRMbnFGuHAE7LPVLNxdACf2GBsDQ5525lXZwh2UFC/BT7cdPQrk7z0enouStkQvaQDhjW5Dxj4L3CGse8gjY8tUiL3MdpsTwTWzc7RzdCjkhMX0NsSy0xvHgq7KiH6jVc5ocPf1V7KmQQwJTVD41YT+lGxCBqYaM0iPJV0TVe/wB7QI59csIHyXWw2k+yLrNgGuvkha7iAQB6phUqE6wZXlN4JgiPELoxbfIrJNRVoT2rSNXKVzUDtuCcV6TfBAutmhE48ioZLQFSlOez9gyuaragOjWwQYgkmT46BK3nktD2P2qn+0fMqnrZuGCUo8Pj9y3o4KeZJ9c/sNaOGBlNtNrjDRAzbnjJI4+SorWjxwnw1RsmVZTkrzvuSu2eog3jVLoBsbnJMzI6aq+5c4tLnbk+fmUcaYMHSRsgsRDjqFCmpSOUlKV0LWvIKZWl5sClWaDqpNcnyhZYnBSRohrsefjHWFCpU5/8fhKW2t3GhQt7f76pKxu6RVWnblRZf3nAKrCzqXHgPLqs/c38uytkkmIG56LUYZYOawe0id8u8HmTxKsZILHDnyWZuMY7USqNfV92SxnE8Xaf09OqusrZlIZWjXi4953ieKk96qLlXttV4E02glyTdo8J9uyW/wCoyS3rzZPI/NNqb5HVehdjySxTUo9oXPGpxcZGHwi2gS8ajor7619o2GmOgTXH7UtGcCAd/HafNZJ+JOa6B5r1ODL70FOJgZoe1LYz3/Azzd6rl7/ix5n0XqfUivUTQvwikBslFeo1joHwRFbETlgpQ92Z2y5vcynji12M6FVu5CPY5pHIJd7ExoOClTedtQgkrLMew4uMiIV7Wh0RufwqllMHijbJus+QQx7HYo7pUF0aIA2Q1+wR1R1QQEuuamhTWX9qaoTi4LnDzHop3NOdirsPtw5pP+4+q8q27ydAgcuTKcNrrwCPsiBM+K0HZVn+W+Bu4fJI6zH7HZPuyroY8dfoqHqX/Hf6F3QJLOv7DctXZoUiUO4rzyVnoErDKdVTc2UCCiKVZC410DKFcopurMEfLoldWkWHmOB/NloC4IS5eyDMDxTMeVrgLHkkJ31QGk8kmFrXuDFMQw/1kiI+/ROb+wkA6lm8fforLavlGUaDkNlcjPbG48sfba4CMEwalbjT3qnFx38hwCZ1ClArkFMaNbMFUyqTe6TsRKDTshUahyjHBDvaoiw4MjmO6tDpVYK6YUtHNF7mBzS0iQ4QfAr5b2jtXW9c03SR3mu2zNPHx3Hkt7iWNMpaTLuXLxWbxusLmn7w1a6WnlO48NvRanpjyY58r8r/AJZm+oYVOF+UZD235K5H/wCEHmvF6K4mF7chg2rrLvwI1lQFstaSgax6bJtgd00gghJ8FZyaVkLS9EZTuOaNpsa5vAqLLFjieCJwXCX1Kha0w0d53LkAOJKXNxxx3SdIKEpT4iuQFhdmyMBcTs1oJPoFpcOwyqAJAaf9x19Gz9E8s7KnRblpiJ3J1c7+4/TZWFywc/rMnKsK4+WbGl0jgrk+WLKmGF3ef/8AVv1JKoqYAx276nkW/wDqnMLlTfqOpf8AV+xeWOPwI7fABTaWtqO3J95oO/hCofhlZvdLHDxLXeh0+K0S8gI4eo51y3f90KlpcUvBkL2mWiajS3qRp67H1UsCuGioWz3h8Rr8pWsNNKbzAKbjnYPZvGoczQT1Zt6QrT9Rhmg4ZFV+UJjpZYsiyQd14CCZVRCgMzdHxm5jY9Ry8FaVn1RsxfFlSkyopRCCxO7FNpPE7fdEludIZ3wV4pigYInZUYHbvuHe0f8A6Y7oP9R5+CW4Xhjrl3tKktpA+b/Dp1WvbWDQGtEAaBOy1ijsj9Xn7ETlS2wLqzJ0SG9tSwyBpxHL+E9ZVlePYquObgxMJOPYgpulXUKpaV7e2haczRpxH1Q7XyrfElaLNqSHtN4cJCrqBLrS5LT0VmMYtToszuOp7rR3ndAPqke1LdS8iH+VlzjGqCvadZ4y04aD/VOvly8VmKmL1KzpPut4NG3meJTiyunbSrb08sfPFnb7KGdlHzJcCeZJM/BMGYOGU35oIyO+W6v/AFjxqZjnwVGIYofZPHNjh6ghcp5pSXPkDLBbGzEfrX8vguU5C5enpHmfcZO3eC7KVGtUcyoMuycX2EAe+0weKGZYl8AauJAA5kmAEMZR7EThxwO8Dw51fUHKB3ndOnMrZWduymzIwQBrvueJJ4lU4bZijTbSGuUan9zuJ9US4ryev10tROl9K6+/3NrS6SOKP3OqPVXtFCo5UlypRiaEYcBHtl77ZDNCsDUTSJcUFNfKkh2lXNKCQpxokQuC4rggIKLq2DgllRrmmD6p0Sq6tHMIKbDJXDGQybexSKmmqVix/UPz1NKQ2HF/2HVNLqyI6jc8D18VWakhW4OlcSypJrgue4aACANAOA6Ksyq8yk0oaonomxyKp3HBCLmlC4pkNJhrwlF/b5feG3H7pg240QRuhUqBgggd7l4IsSknfgFWhBe4kRoxsnmZgfUpPVovqPLnkk9eA4AcAtHd0m06ppuHVp5g7fUK+3w4OPuxC0Y5owVpfqc1u5YjtLDotNh+FRq70R1tYtZB4ofFMVbTBAMuVTJnnle2B1rwW3lZlNvvQZ4c1ksbq5aL37bR0lwAHxVNe+c90kpd2zu8tCmzi9w9Ggn5lqu6TTOOSKfbZU1OVLFJr4FH6xckvt1y9HsPNWfVMSqZBBOnVS7IWua4DyZDASP7th9fRLbppqCeKc9hQW5y79wGvICf/JZWpk44JfI3TqLzJRNeCoPcphVvOq8mj0aKairarqiqCauh0XwWsCtaFS1XNcgYuRaKa8AhWMevSEu2Jt+TzdQKkvCVCJRBeyvVFwRBHlVgKEfZtjTQ9PsiZXqbGbiErQjr1Gh/siQHxmjiWmRmHMaFcCpdpsFF1Syg5KrDmpVBoWP8R/Sdj/CwmF9rKlJ5t7xhD2nKXgagj97Rv4jeRotPDi9+G6Ha7X/aI/Ee3LbPz0zehwXtZwAS+hdNe0Pa4OaeI1CEvBUr/wCWwEM/qdz6eCUsfPPBYvygbEcYLyWUvAvHyb9017M20FV2uD0qfecPJGOxanSENCLJJOOzGjr4J9rrHNTFRvep6+LTuPgs7ZYiWwQUwrY652nDkkV1TyO07rtR05hM0+NqGyZEW4qh/c484sgaHiVmLy5LjJK9fV0Qb3SrmDBGHSK2ab6RbROoSrtgHPqNAHu02gA9TqfoPJNremToEfcUGubBGvzV3CtuTcZOsy/l2I+cfpncivFv/wDDWclyve8jN5HltSlqNwHQP/vn1ACpdDGGd1XgVyczgeP0Kz9ZUsbSGaDHJZFM2DTMH80/AvagQ1q7hz+aJXlckdsj0sWUhQhTcxSACixyZ40qxpVDlzaiho5xsJBVjXocPUg5A0LcS8qOZQDl7KigaJrpXi5cdRBzV4QrFAlSSiothZPtv2aFwBXpj/OYIIA1qM/b1cOHpyjYFVPVjT55YZqceyZQWRUz4/Yvq0DLZE7g7HxH1WhtcbDxAJa7i3l4cwtBjWGNgvAkHvDkf3eCyOIYQJzMMEL0cfa1cd67/nZT3Twug2rduKCq1ygaN64OFN494kAEcSdAEZUEEg6EcDofRA8Lh2hi1Kl5IMqFG0qmYZSlpV1J5USjY2ORFlwyJCGpsRJY550Eo23t8mu7vkmY4tlTUZ4xCbS0DGwe8RJPLoqrm1A1lFW7WuGu6jfU2xAT4prgyJvdyxV7Ic/iuUv0q5MF2eYnjjG7lJbLtNFxTdszNDp5O0nykHyWWqVnOMkyoRKsexGqY33WvpPv1rVTQPkT6rDdjMX9tQbJ99nuO6kbO8xB8ZWutq359F5bVadxbi+0bOLJaTQY5RyLgePD80UgsxpotJ8FTwqnNV71AlEmNiyDSrWlUuXgcpoKrCJXoKqa9eyhoDaXBy9VbXKWdDQLR6VxC8zr2Vxx4QoFekod9WESVhRVk3BZfHLH2Zlvcdt0P7T9OngtKypKru7MVabqbtnDQ8jwPkVb0uoeCd+PIObFuj9z5vb0Q+6oj/fPk0Fx/wDytDdFpJBAd0IlJsAt3C6eHCDSBaejicvyzLS1bPJ70TPyXqm1wecyq5WJ221MzLIPiR9VCjSpkxl9SUZVuBOsCTxUqNs2cw/hBtj8C1km/JNtpA008B8UOWZdzJTMVuCGuLUEySpRzVgtC0Grp/gK6jbF5k7fNEUbcFW1TAhu65slLgj+hZyXILKebvUrlFP5B4+D5M1qIoWxcYAXlBkla7C67BTy5NfD5FXJzoG6FfZy7db1wd2uhrh56O8QfgSvqNtXmCsbgmFCpUmNGkGevAfBaD2mSoWaCe6OemqztZi9xbl35NHRydU+jR0K0eaLaeW35oUjoVkdQrwvP58PlGlBjHKqnsU6b5Eg/wAfwpqjymOUgWVEhEPpqvLCPcNUimVLOrMkqJpqbQVo8Dl7mUIUgFxzPZU2lRhcoIPSqLg6K9DVwpj2TDsop1IRtKqlzlfRcmTjaGzimI8foincmo3Q1GtcesS310+KPtL1rmQ4+qp7U0S51KN8rvm37rOXVBzdZ9F6TQXPTxf84PLayLjllS4PcVpS/wB13omGGtIbqkjahadZTa1qlzFblZSi+S41cx0KLpNMaoZtlLZafe+B6L2xuXAw/QqKfaGJryHUxqhqwLX9Ci3VeIQV9fhwgDVB2Sw7I1clOapyPouQ1IjcZ7ArSm4BpYc3gfmtTa9nGwC46ch8pTd1rPP1Kh7Bze6SPl6Jkpt+Czj0cE7lye07NrBDWho6CP8AlK8cw8ubLe83Uc00Fw4btnqPsvH1Wu/nQpbkXEqEOE4lnlrtHt3HMfuH5ondGus/j2FOa4VqU5hroPj/AAp4TioqD9rh3m8uo6KnqMH9UR8JXwzT065GxhH0a4PQpCypsUS2usvLgUh6dD5pXGmllC/ghp8eviEwpVgdjP5yVGeOUXyTfwc5sKGqulRIQJhqRS5y4FSIUYRDCRVb1F4KhmPFSkEok2vQ9Uq0ql8o4oOKKCiLdig1ivc9tNpe7YfHojk/CJnKkJO02ICnUaDwYR5uIPyCzdW5LzuYUcduPa1JPMlC0aJJ0Xp9EpY8EYHmdVqLySiuhiym0nVWB0GBskdy9zXRqEfa1tJViuShKSGdvcuZPI7jrzChUuiTMKLLhpCIp5U1IgnQvCNxp8kwtqTXOzRw9UHmE7Ly4xDJAal5IccDIv5H3tOi5Zz29TquSNg3ejWg9V4PBcdFWXwjLxzmhV1LWeRVhPmoOdxCholMCqUCNGkj4j0WfxnCSXe0p+5UHFux8QtbC8fTBCCqCsyGHYvJ9nUGSoOB2d1bz8E1FVSxXB2VRDhPIjQg8weaz1V9a2781af7h32/3Dj4qvPAnzH/AAOjl8SNK2oNOmyKZdQs/a3zHjMxwIRArFVJ4b4Y5SNNSxI8dfn6opl408Y8fusm27VgvFTnpL6CUka5pnbXwXjisq2/I4/FWjGnj+o+eqU9FPwFvRooUXMSA9oHjl6BVu7RP6egUfhMoayGhyLw0lmn9oKh4x4QEDcYm927ifEpsdDlfZDzpGpucRp0+OY8h91mMXxdz9zA4DgEuq3E8UjvL7OYB90ceZ+y0tL6fFO3yylqNVxwaas6m6kBGoHmDxSy3DmmRqFGi/M0FTNQgaBayS6MF23bK8T/AMzbQ8Psq8MoPGjoVVRzgZEoq3quIRdIjjyEG2I1V1GqhXXDhpCnbtM6gqY3VnceAqpXI2VXtJ3V9Zgj84KqnRlwjVddg2Rzu6rk4/SHkuQnb18msDNNFVl4kfnNVG50jn8vz5qdOpPglmuQcRw3VTWkIluslVuPl6rqJTKieZUWuU30tVzmQgaCsiT5oK5pB3ijoHBU1hzQtEpmLxXACD7SgSx/Fo2d9EppdoX0zkrsII4j6hfQXU5Ef8hIsawZlUEEa8HDdSnGXE0c9y5gwO1xKnU7rgfn6cEW16yFfAKjdQJgkS3p8QqmV67Nnkjrr89VD0yf0slahr6l/g2Zeol3VZJuN1xuGnyP3Xv/AMgqfsHqfsh/CzC/E4zVlyrLlmD2gqfsHqfsoHGap2yjyUrTTBepx+DUFyDuL5rd3eQ1Kz7q9R3ecfl8lKjSTo6eu2InqL6Qbc1jUGXUNPLc+JQJt3M17zfiEaxik46KykoqkVm23bLLO9DQAUU/ERwSw0Z2VVW1I1U7F2Vd3I6u6oNPQeB5eKWWdwWjqp0qpLYIXlACdkJDHGG1w8w4RPPmnZtBuFlwXD3oICbWdZ7m6EpUpUQk7olidw3uzrKZWD2NZOmZBWuFCqZdvOqni+FPpMlhJA4HVCpV0yaUlyGf4oeS5ZP9RU6L1FcgPaifRa/9PmiqGzfziFy5KRtPokq6vePkuXIkCiNXf0+qkVy5Qwip/wCeqqqbeq5chYSKBuh7jiuXJYaFtns7/uWbxbvu8Vy5Nh2RITVFSVy5WkU5Hi9auXIgAmmrguXKDgpU1tl4uUsB9E7PdX3C5cjfRWidb/RD23eXLkj5DY/qf6Z8Poiez/dPivFyrZOjl9Qyw7/Ud4phi3+n5LlynycuzKLly5MDP//Z" alt="">
+                <h3>Mangoes 1kg</h3>
+                <p>₹149</p>
+                <button onclick="addToCart()">Add To Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500" alt="">
+                <h3>Spinach 500g</h3>
+                <p>₹39</p>
+                <button onclick="addToCart()">Add To Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=500" alt="">
+                <h3>Orange Juice</h3>
+                <p>₹99</p>
+                <button onclick="addToCart()">Add To Cart</button>
+            </div>
+
+        </div>
+        </div>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>FreshMart Grocery Delivery Project © 2026</p>
+    </footer>
+    <script>
+
+        let cartCount = 0;
+
+        /* CART */
+
+        function addToCart(productName) {
+            cartCount++;
+
+            document.getElementById("cart-count").innerText = cartCount;
+
+            alert(productName + " added to cart");
+        }
+
+
+        /* LOGIN */
+
+        function openLogin() {
+            document.getElementById("loginModal").style.display = "block";
+        }
+
+        function closeLogin() {
+            document.getElementById("loginModal").style.display = "none";
+        }
+
+        function loginUser() {
+            let username =
+                document.getElementById("username").value;
+
+            let password =
+                document.getElementById("password").value;
+
+            if (username === "" || password === "") {
+                alert("Please fill all fields");
+                return;
+            }
+
+            alert("Welcome " + username);
+
+            document.querySelector(".login-link").innerHTML =
+                '<i class="bi bi-person-check"></i> ' + username;
+
+            closeLogin();
+        }
+
+    </script>
+</body>
+
+</html>

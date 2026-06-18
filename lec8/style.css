@@ -1,0 +1,144 @@
+/* General */
+body {
+    background-color: #f3f4f6;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.topbar {
+    height: 60px;
+    background: linear-gradient(90deg, #00c6ff, #7b2ff7);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    height: calc(100vh - 60px);
+    background: #ffffff;
+    border-right: 1px solid #dee2e6;
+    overflow-y: auto;
+}
+
+.sidebar .nav-link {
+    color: #333;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+
+.sidebar .nav-link:hover {
+    background: #f1f3f5;
+}
+
+/* Canvas Area */
+.canvas-area {
+    flex: 1;
+    padding: 30px;
+}
+
+.canvas {
+    background: white;
+    min-height: 650px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* Shapes */
+.shape {
+    width: 160px;
+    height: 160px;
+}
+
+/* Circle */
+.circle {
+    background: #b4ef67;
+    border-radius: 50%;
+}
+
+/* Square */
+.square {
+    background: #efd85a;
+}
+
+/* Triangle */
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 80px solid transparent;
+    border-right: 80px solid transparent;
+    border-bottom: 160px solid #ff7a1a;
+}
+
+/* Pentagon */
+.pentagon {
+    width: 160px;
+    height: 160px;
+    background: #2100c7;
+    clip-path: polygon(
+        50% 0%,
+        100% 38%,
+        82% 100%,
+        18% 100%,
+        0% 38%
+    );
+}
+
+/* Plus */
+.plus {
+    font-size: 180px;
+    line-height: 130px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* Parallelogram */
+.parallelogram {
+    width: 180px;
+    height: 140px;
+    background: #c56ce6;
+    transform: skew(20deg);
+}
+
+/* Arrow */
+.arrow {
+    width: 120px;
+    height: 140px;
+    background: #8b5cf6;
+    clip-path: polygon(
+        30% 40%,
+        30% 100%,
+        70% 100%,
+        70% 40%,
+        100% 40%,
+        50% 0%,
+        0% 40%
+    );
+}
+
+/* Heart */
+.heart {
+    font-size: 160px;
+    color: red;
+    line-height: 140px;
+}
+
+/* Bottom Thumbnail */
+.page-thumb {
+    width: 120px;
+    height: 80px;
+    border: 2px solid #adb5bd;
+    border-radius: 10px;
+    background: white;
+}
+
+.menu-item{
+    padding:12px 20px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    cursor:pointer;
+}
+
+.menu-item i{
+    font-size:20px;
+}

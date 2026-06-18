@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Canva Webpage</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f0f0; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+  /* ══════════════════════════════
+     TOP NAVBAR
+  ══════════════════════════════ */
+  .top-navbar {
+    height: 56px;
+    background: linear-gradient(
+        90deg,
+        #00C4FF 0%,   
+        #5B5CFF 60%,  /* Blue */
+        #7D2AE8 100%  /* Dark purple */
+    );
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 6px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+  
+  .app-logo {
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    border-radius: 8px;
+    color: #fff; font-weight: 800; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-right: 4px;
+  }
+  .nav-divider { width: 1px; height: 22px; background: #e0e0e0; margin: 0 4px; }
+
+  .tn-btn {
+    height: 34px; padding: 0 10px;
+    border: none; background: transparent;
+    border-radius: 6px; cursor: pointer;
+    color: #333; font-size: 13px;
+    display: flex; align-items: center; gap: 5px;
+    white-space: nowrap; transition: background .15s;
+  }
+  .tn-btn:hover { background: #f3f3f3; }
+  .tn-btn.active { background: #f0ebff; color: #7c3aed; }
+
+  .tn-icon {
+    width: 34px; height: 34px;
+    border: none; background: transparent;
+    border-radius: 6px; cursor: pointer;
+    color: #555; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  .tn-icon:hover { background: #f3f3f3; }
+
+  .badge-new {
+    background: #7c3aed; color: #fff;
+    font-size: 9px; font-weight: 700;
+    padding: 2px 5px; border-radius: 8px;
+  }
+
+  .title-field {
+    border: none; outline: none;
+    font-size: 14px; font-weight: 500;
+    color: #333; background: transparent;
+    text-align: center; width: 90px;
+    border-radius: 4px; padding: 2px 6px;
+    transition: background .15s;
+  }
+  .title-field:hover, .title-field:focus { background: #f5f5f5; }
+
+  .ml-auto { margin-left: auto; }
+
+  .btn-trial {
+    height: 34px; padding: 0 14px;
+    background: #fff; border: 1.5px solid #ddd;
+    border-radius: 20px; font-size: 13px;
+    cursor: pointer; color: #333;
+    display: flex; align-items: center; gap: 5px;
+    transition: border-color .15s, color .15s;
+    white-space: nowrap;
+  }
+  .btn-trial:hover { border-color: #7c3aed; color: #7c3aed; }
+
+  .user-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff; font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+  }
+
+  .btn-present {
+    height: 34px; padding: 0 12px;
+    background: #f5f5f5; border: none;
+    border-radius: 7px; font-size: 13px;
+    cursor: pointer; color: #333;
+    display: flex; align-items: center; gap: 5px;
+    transition: background .15s;
+    white-space: nowrap;
+  }
+  .btn-present:hover { background: #e8e8e8; }
+
+  .btn-share {
+    height: 34px; padding: 0 18px;
+    background: #7c3aed; border: none;
+    border-radius: 8px; font-size: 13px;
+    font-weight: 600; color: #fff;
+    cursor: pointer; display: flex; align-items: center; gap: 5px;
+    transition: background .15s;
+  }
+  .btn-share:hover { background: #6d28d9; }
+
+  /* ══════════════════════════════
+     CONTEXT TOOLBAR
+  ══════════════════════════════ */
+  .ctx-bar {
+    height: 48px;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 6px;
+    position: fixed;
+    top: 56px; left: 0; right: 0;
+    z-index: 999;
+  }
+  .ctx-label { font-size: 13px; font-weight: 600; color: #444; }
+  .ctx-color {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid #bbb; cursor: pointer;
+    background: #e74c3c;
+  }
+  .ctx-btn {
+    height: 32px; padding: 0 10px;
+    border: 1.5px solid #e0e0e0; background: #fff;
+    border-radius: 6px; cursor: pointer;
+    color: #333; font-size: 13px;
+    display: flex; align-items: center; gap: 5px;
+    transition: border-color .15s, color .15s;
+    white-space: nowrap;
+  }
+  .ctx-btn:hover { border-color: #7c3aed; color: #7c3aed; }
+  .ctx-icon {
+    width: 32px; height: 32px;
+    border: 1.5px solid #e0e0e0; background: #fff;
+    border-radius: 6px; cursor: pointer;
+    color: #444; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .15s, color .15s;
+  }
+  .ctx-icon:hover { border-color: #7c3aed; color: #7c3aed; }
+
+  /* ══════════════════════════════
+     MAIN LAYOUT
+  ══════════════════════════════ */
+  .editor-layout {
+    display: flex;
+    position: fixed;
+    top: 104px; /* 56 + 48 */
+    bottom: 48px;
+    left: 0; right: 0;
+    overflow: hidden;
+  }
+
+  /* ── LEFT ICON BAR ── */
+  .icon-bar {
+    width: 64px;
+    background: #fff;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    gap: 2px;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+  .ib-btn {
+    width: 52px; height: 52px;
+    border: none; background: transparent;
+    border-radius: 8px; cursor: pointer;
+    color: #555;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 3px; transition: background .15s, color .15s;
+    position: relative;
+  }
+  .ib-btn i { font-size: 18px; }
+  .ib-btn span { font-size: 10px; font-weight: 500; line-height: 1.2; text-align: center; }
+  .ib-btn:hover { background: #f5f0ff; color: #7c3aed; }
+  .ib-btn.active { background: #f0ebff; color: #7c3aed; }
+  .ib-crown { position: absolute; top: 5px; right: 6px; color: #f59e0b; font-size: 9px; }
+  .ib-sep { width: 38px; height: 1px; background: #e5e5e5; margin: 4px 0; }
+
+  /* ── LEFT PANEL ── */
+  .left-panel {
+    width: 310px;
+    background: #fff;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .panel-search-row {
+    padding: 10px 12px;
+    display: flex; gap: 7px; align-items: center;
+    border-bottom: 1px solid #eee;
+  }
+  .panel-search-row input {
+    flex: 1;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color .15s;
+    color: #333;
+  }
+  .panel-search-row input:focus { border-color: #7c3aed; }
+  .mic-btn {
+    width: 36px; height: 36px;
+    border: 1.5px solid #e0e0e0; background: #fff;
+    border-radius: 8px; cursor: pointer;
+    color: #666; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .15s, color .15s;
+    flex-shrink: 0;
+  }
+  .mic-btn:hover { border-color: #7c3aed; color: #7c3aed; }
+
+  .panel-actions {
+    display: flex; gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid #eee;
+  }
+  .pa-btn {
+    flex: 1; height: 36px;
+    border-radius: 8px; border: none;
+    cursor: pointer; font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    transition: filter .15s;
+  }
+  .pa-btn:hover { filter: brightness(.95); }
+  .pa-generate {
+    background: linear-gradient(135deg, #f5f0ff, #ede9fe);
+    color: #7c3aed;
+    border: 1.5px solid #ddd6fe !important;
+  }
+  .pa-search { background: #7c3aed; color: #fff; }
+
+  .panel-body {
+    flex: 1; overflow-y: auto;
+    padding: 12px;
+  }
+  .sec-title {
+    font-size: 13px; font-weight: 600;
+    color: #333; margin-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .see-all { font-size: 12px; color: #7c3aed; cursor: pointer; font-weight: 500; }
+
+  .tpl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .tpl-card {
+    border-radius: 8px; overflow: hidden;
+    cursor: pointer; border: 2px solid transparent;
+    transition: border-color .15s;
+    height: 80px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .tpl-card:hover { border-color: #7c3aed; }
+  .tc-inner {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 3px;
+    font-size: 12px; font-weight: 700;
+    padding: 6px;
+    text-align: center;
+  }
+  .crown-tag {
+    position: absolute; bottom: 4px; right: 4px;
+    background: #f59e0b; color: #fff;
+    font-size: 9px; padding: 1px 4px; border-radius: 3px;
+  }
+
+  /* ══════════════════════════════
+     CANVAS AREA
+  ══════════════════════════════ */
+  .canvas-area {
+    flex: 1;
+    background: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    padding: 30px;
+  }
+  .canvas-board {
+    background: #fff;
+    box-shadow: 0 4px 28px rgba(0,0,0,.16);
+    border-radius: 2px;
+    width: 800px;
+    min-height: 500px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 240px);
+    align-items: center;
+    justify-items: center;
+    padding: 30px 20px;
+  }
+
+  /* shapes */
+  .shape { cursor: pointer; transition: filter .15s; }
+  .shape:hover { filter: brightness(.9); }
+  .shape.sel { outline: 2px solid #7c3aed; outline-offset: 5px; }
+
+  .s-circle  { width:155px; height:155px; border-radius:50%; background:#8bdb5a; }
+  .s-rect    { width:170px; height:150px; background:#f5c842; border-radius:4px; }
+  .s-triangle-wrap { display:flex; align-items:center; justify-content:center; }
+  .s-triangle { width:0; height:0; border-left:80px solid transparent; border-right:80px solid transparent; border-bottom:155px solid #e8832a; cursor:pointer; transition: filter .15s; }
+  .s-triangle:hover { filter: brightness(.9); }
+  .s-pentagon { width:145px; height:140px; background:#2d2d9e; clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%); }
+  .s-cross    { width:145px; height:145px; background:#111; clip-path:polygon(33% 0%,66% 0%,66% 33%,100% 33%,100% 66%,66% 66%,66% 100%,33% 100%,33% 66%,0% 66%,0% 33%,33% 33%); }
+  .s-para     { width:175px; height:125px; background:#b065e0; clip-path:polygon(15% 0%,100% 0%,85% 100%,0% 100%); }
+  .s-arrow    { width:145px; height:155px; background:#8b5cf6; clip-path:polygon(50% 0%,100% 45%,75% 45%,75% 100%,25% 100%,25% 45%,0% 45%); }
+
+  /* heart wrapper with selection */
+  .heart-wrapper {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .heart-wrapper svg { width:150px; height:140px; }
+  .sel-box {
+    position: absolute; inset: -8px;
+    border: 1.5px solid #7c3aed;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .handle {
+    position: absolute;
+    width: 10px; height: 10px;
+    background: #fff; border: 1.5px solid #7c3aed;
+    border-radius: 2px;
+  }
+  .h-tl{top:-5px;left:-5px} .h-tm{top:-5px;left:50%;transform:translateX(-50%)} .h-tr{top:-5px;right:-5px}
+  .h-lm{left:-5px;top:50%;transform:translateY(-50%)} .h-rm{right:-5px;top:50%;transform:translateY(-50%)}
+  .h-bl{bottom:-5px;left:-5px} .h-bm{bottom:-5px;left:50%;transform:translateX(-50%)} .h-br{bottom:-5px;right:-5px}
+
+  .heart-actions {
+    position: absolute; bottom: -50px;
+    background: #fff; border: 1px solid #e0e0e0;
+    border-radius: 8px; padding: 4px;
+    display: flex; gap: 2px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.1);
+    z-index: 10;
+  }
+  .ha-btn {
+    width: 30px; height: 30px;
+    border: none; background: transparent;
+    border-radius: 6px; cursor: pointer;
+    color: #555; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  .ha-btn:hover { background: #f5f5f5; }
+
+  /* ══════════════════════════════
+     BOTTOM BAR
+  ══════════════════════════════ */
+  .bottom-bar {
+    height: 48px;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 1000;
+  }
+  .bb-btn {
+    height: 30px; padding: 0 10px;
+    border: 1.5px solid #e0e0e0; background: #fff;
+    border-radius: 6px; font-size: 12px; color: #333;
+    cursor: pointer; display: flex; align-items: center; gap: 5px;
+    transition: border-color .15s, color .15s;
+  }
+  .bb-btn:hover { border-color: #7c3aed; color: #7c3aed; }
+
+  /* page thumbnail */
+  .page-thumb {
+    border: 2px solid #7c3aed;
+    border-radius: 6px; overflow: hidden;
+    width: 68px; height: 38px; cursor: pointer;
+    background: #fff;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(2,1fr);
+    gap: 2px; padding: 3px;
+    align-items: center; justify-items: center;
+  }
+  .m-circle  { width:9px;height:9px;border-radius:50%;background:#8bdb5a; }
+  .m-rect    { width:10px;height:8px;background:#f5c842;border-radius:1px; }
+  .m-tri     { width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:9px solid #e8832a; }
+  .m-pent    { width:9px;height:9px;background:#2d2d9e;clip-path:polygon(50% 0%,100% 38%,82% 100%,18% 100%,0% 38%); }
+  .m-cross   { width:9px;height:9px;background:#111;clip-path:polygon(33% 0%,66% 0%,66% 33%,100% 33%,100% 66%,66% 66%,66% 100%,33% 100%,33% 66%,0% 66%,0% 33%,33% 33%); }
+  .m-para    { width:11px;height:7px;background:#b065e0;clip-path:polygon(15% 0%,100% 0%,85% 100%,0% 100%); }
+  .m-arrow   { width:9px;height:10px;background:#8b5cf6;clip-path:polygon(50% 0%,100% 45%,75% 45%,75% 100%,25% 100%,25% 45%,0% 45%); }
+  .m-heart   { width:9px;height:8px;background:#e74c3c;clip-path:polygon(50% 30%,100% 0%,100% 55%,50% 100%,0% 55%,0% 0%); }
+
+  .add-pg {
+    width:30px;height:30px;
+    border:1.5px solid #e0e0e0;background:#fff;
+    border-radius:6px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;color:#555;transition:border-color .15s,color .15s;
+  }
+  .add-pg:hover { border-color:#7c3aed;color:#7c3aed; }
+
+  .pg-count { font-size:13px;color:#666; }
+
+  /* zoom */
+  .zoom-wrap { display:flex;align-items:center;gap:6px; }
+  .z-btn {
+    width:26px;height:26px;
+    border:none;background:transparent;
+    border-radius:4px;cursor:pointer;
+    color:#666;font-size:12px;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s;
+  }
+  .z-btn:hover { background:#f0f0f0; }
+  .zoom-track {
+    width:80px;height:4px;
+    background:#e0e0e0;border-radius:2px;
+    position:relative;cursor:pointer;
+  }
+  .zoom-fill { height:100%;background:#7c3aed;border-radius:2px;width:53%; pointer-events:none; }
+  .zoom-knob {
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:12px;height:12px;
+    background:#fff;border:2px solid #7c3aed;border-radius:50%;
+    left:53%;margin-left:-6px;
+    transition:left .05s;
+  }
+  .zoom-pct { font-size:13px;font-weight:500;color:#333; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ TOP NAVBAR ══════════ -->
+<div class="top-navbar">
+  <!-- Logo -->
+  <!-- <div class="app-logo">D</div> -->
+
+  <!-- Nav buttons -->
+  <button class="tn-btn"><i class="fa fa-file-alt"></i> File</button>
+  <button class="tn-btn"><i class="fa fa-expand-arrows-alt"></i> Resize</button>
+  <button class="tn-btn active">
+    <i class="fa fa-pen"></i> Editing <i class="fa fa-chevron-down" style="font-size:10px"></i>
+  </button>
+  <span class="badge-new">New</span>
+
+  <div class="nav-divider"></div>
+
+  <button class="tn-icon" title="Undo"><i class="fa fa-undo"></i></button>
+  <button class="tn-icon" title="Redo"><i class="fa fa-redo"></i></button>
+
+  <div class="nav-divider"></div>
+
+  <button class="tn-icon" title="Saved"><i class="fa fa-cloud"></i></button>
+
+  <div class="nav-divider"></div>
+
+  <input class="title-field" value="Sample" />
+
+  <!-- Right side -->
+  <div class="ml-auto d-flex align-items-center gap-2">
+    <button class="btn-trial">⭐ Start your trial for ₹0</button>
+    <div class="user-avatar">W</div>
+    <button class="tn-icon" title="Analytics"><i class="fa fa-chart-bar"></i></button>
+    <button class="tn-icon" title="Comments"><i class="fa fa-comment-dots"></i></button>
+    <button class="btn-present">
+      <i class="fa fa-play"></i> Present <i class="fa fa-chevron-down" style="font-size:10px"></i>
+    </button>
+    <button class="btn-share"><i class="fa fa-share-alt"></i> Share</button>
+  </div>
+</div>
+
+<!-- ══════════ CONTEXT TOOLBAR ══════════ -->
+<div class="ctx-bar">
+  <span class="ctx-label">Edit</span>
+  <div class="ctx-color" title="Fill color"></div>
+  <button class="ctx-icon" title="Line style"><i class="fa fa-bars"></i></button>
+  <button class="ctx-icon" title="Border radius"><i class="fa fa-circle-notch"></i></button>
+  <button class="ctx-icon" title="Texture"><i class="fa fa-th"></i></button>
+  <div class="nav-divider"></div>
+  <button class="ctx-btn"><i class="fa fa-magic"></i> Effects</button>
+  <button class="ctx-btn"><i class="fa fa-film"></i> Animate</button>
+  <button class="ctx-btn"><i class="fa fa-crosshairs"></i> Position</button>
+  <div class="nav-divider"></div>
+  <button class="ctx-icon" title="More options"><i class="fa fa-sliders-h"></i></button>
+</div>
+
+<!-- ══════════ MAIN LAYOUT ══════════ -->
+<div class="editor-layout">
+
+  <!-- ─── ICON BAR ─── -->
+  <div class="icon-bar">
+    <button class="ib-btn active" onclick="setActive(this)">
+      <i class="fa fa-th-large"></i>
+      <span>Templates</span>
+    </button>
+    <button class="ib-btn" onclick="setActive(this)">
+      <i class="fa fa-shapes"></i>
+      <span>Elements</span>
+    </button>
+    <button class="ib-btn" onclick="setActive(this)">
+      <i class="fa fa-font"></i>
+      <span>Text</span>
+      <i class="fa fa-crown ib-crown"></i>
+    </button>
+    <button class="ib-btn" onclick="setActive(this)">
+      <i class="fa fa-star"></i>
+      <span>Brand</span>
+    </button>
+    <button class="ib-btn" onclick="setActive(this)">
+      <i class="fa fa-upload"></i>
+      <span>Uploads</span>
+    </button>
+    <div class="ib-sep"></div>
+    <button class="ib-btn" onclick="setActive(this)">
+      <i class="fa fa-tools"></i>
+      <span>Tools</span>
+    </button>
+    <button class="ib-btn" onclick="setActive(this)">
+      <i class="fa fa-folder-open"></i>
+      <span>Projects</span>
+    </button>
+    <button class="ib-btn" onclick="setActive(this)">
+      <i class="fa fa-puzzle-piece"></i>
+      <span>Apps</span>
+    </button>
+    <div class="ib-sep"></div>
+    <button class="ib-btn" onclick="setActive(this)">
+      <i class="fa fa-wand-magic-sparkles"></i>
+      <span style="font-size:9px;text-align:center;">Magic Media</span>
+    </button>
+    <button class="ib-btn" onclick="setActive(this)">
+      <i class="fa fa-music"></i>
+      <span>Audio</span>
+    </button>
+    <div class="ib-sep"></div>
+    <button class="ib-btn" onclick="setActive(this)">
+      <i class="fa fa-video"></i>
+      <span style="font-size:9px;text-align:center;">videoforme</span>
+    </button>
+  </div>
+
+  <!-- ─── LEFT PANEL ─── -->
+  <div class="left-panel">
+    <!-- Search -->
+    <div class="panel-search-row">
+      <input type="text" placeholder="Describe your ideal design" />
+      <button class="mic-btn" title="Voice search"><i class="fa fa-microphone"></i></button>
+    </div>
+    <!-- Buttons -->
+    <div class="panel-actions">
+      <button class="pa-btn pa-generate border"><i class="fa fa-sparkles"></i> Generate</button>
+      <button class="pa-btn pa-search"><i class="fa fa-search"></i> Search</button>
+    </div>
+    <!-- Scrollable content -->
+    <div class="panel-body">
+
+      <div class="sec-title">Recently used <span class="see-all">See all</span></div>
+      <div class="tpl-grid">
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:linear-gradient(135deg,#0f172a,#1e293b);">
+            <div class="d-flex gap-1 mb-1">
+              <div style="width:11px;height:11px;border-radius:50%;background:#22c55e;"></div>
+              <div style="width:11px;height:11px;border-radius:50%;background:#3b82f6;"></div>
+            </div>
+            <div style="font-size:8px;color:#94a3b8;font-weight:500;">Product Marketing</div>
+          </div>
+        </div>
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;font-size:9px;font-weight:800;letter-spacing:.5px;">
+            PROJECT<br>PRESENTATION
+            <div style="font-size:7px;font-weight:400;color:#3b82f6;margin-top:2px;">by Jackson Aira</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-title">All results</div>
+      <div class="tpl-grid">
+
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:#111;color:#fff;font-size:15px;letter-spacing:1px;">
+            PORTO<br>FOLIO.
+          </div>
+        </div>
+
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:linear-gradient(135deg,#1c1c1c,#2d2d2d);">
+            <div style="font-size:12px;font-weight:700;color:#e74c3c;font-style:italic;">Creative</div>
+            <div style="font-size:9px;color:#ccc;">Portfolio</div>
+          </div>
+        </div>
+
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;align-items:flex-start;padding:8px;">
+            <div style="font-size:11px;font-weight:800;">CREATIVE</div>
+            <div style="font-size:11px;font-weight:800;">BRIEF</div>
+            <div style="width:60%;height:2px;background:#fff;margin-top:4px;"></div>
+          </div>
+        </div>
+
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:#111;color:#fff;font-size:15px;font-style:italic;font-weight:900;">
+            Creative<br><span style="font-size:12px;font-weight:400;">Portfolio</span>
+          </div>
+        </div>
+
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:linear-gradient(135deg,#7f1d1d,#991b1b);">
+            <div style="font-size:12px;font-weight:900;color:#fff;letter-spacing:2px;">PITCH</div>
+            <div style="font-size:12px;font-weight:900;color:#fff;letter-spacing:2px;">DECK</div>
+            <div style="color:#fca5a5;font-size:11px;margin-top:2px;">★★★</div>
+          </div>
+        </div>
+
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:#f5f5f0;color:#111;font-size:14px;font-weight:700;">
+            portfolio
+            <span class="crown-tag">★</span>
+          </div>
+        </div>
+
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:#e8e8e0;color:#111;font-size:12px;font-weight:700;letter-spacing:1px;">
+            PORTFOLIO
+            <div style="height:1px;width:70%;background:#888;margin:2px 0;"></div>
+            <div style="font-size:8px;font-weight:400;color:#666;">MINIMAL</div>
+            <span class="crown-tag">★</span>
+          </div>
+        </div>
+
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:#0f0f0f;color:#fff;align-items:flex-start;padding:8px;">
+            <div style="font-size:8px;color:#888;">VOL. 02</div>
+            <div style="font-size:11px;font-weight:800;">FASHION</div>
+            <div style="font-size:11px;font-weight:800;color:#f59e0b;">FUTURE</div>
+          </div>
+        </div>
+
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;font-size:9px;font-weight:600;align-items:flex-start;padding:8px;">
+            <div>Neutral</div>
+            <div style="width:28px;height:28px;background:#c4a04a;border-radius:50%;margin:2px 0;"></div>
+            <div style="font-size:8px;color:#a16207;">NEUTRAL</div>
+            <span class="crown-tag">★</span>
+          </div>
+        </div>
+
+        <div class="tpl-card">
+          <div class="tc-inner" style="background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;align-items:flex-start;padding:8px;">
+            <div style="font-size:8px;color:#fca5a5;">CREATIVE</div>
+            <div style="font-size:14px;font-weight:900;">PORTFOLIO</div>
+            <span class="crown-tag">★</span>
+          </div>
+        </div>
+
+        <div class="tpl-card" style="grid-column:span 2;">
+          <div class="tc-inner" style="background:linear-gradient(135deg,#111,#1f1f1f);color:#fff;font-size:18px;font-weight:900;letter-spacing:2px;">
+            DIGITAL
+            <div style="font-size:9px;color:#666;letter-spacing:4px;font-weight:400;margin-top:2px;">CREATIVE STUDIO</div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /panel-body -->
+  </div><!-- /left-panel -->
+
+  <!-- ─── CANVAS AREA ─── -->
+  <div class="canvas-area">
+    <div class="canvas-board" id="board">
+
+      <!-- Row 1 -->
+      <div class="shape s-circle" onclick="pickShape(this)"></div>
+      <div class="shape s-rect"   onclick="pickShape(this)"></div>
+      <div class="s-triangle-wrap"><div class="s-triangle" onclick="pickShape(this)"></div></div>
+      <div class="shape s-pentagon" onclick="pickShape(this)"></div>
+
+      <!-- Row 2 -->
+      <div class="shape s-cross"  onclick="pickShape(this)"></div>
+      <div class="shape s-para"   onclick="pickShape(this)"></div>
+      <div class="shape s-arrow"  onclick="pickShape(this)"></div>
+
+      <!-- Heart – selected by default -->
+      <div class="heart-wrapper" id="heartWrap" onclick="pickHeart()">
+        <svg viewBox="0 0 150 140" xmlns="http://www.w3.org/2000/svg">
+          <path d="M75 130 C75 130 8 84 8 44 A34 34 0 0 1 75 34 A34 34 0 0 1 142 44 C142 84 75 130 75 130Z" fill="#e74c3c"/>
+        </svg>
+        <div class="sel-box" id="selBox">
+          <div class="handle h-tl"></div><div class="handle h-tm"></div><div class="handle h-tr"></div>
+          <div class="handle h-lm"></div>                                <div class="handle h-rm"></div>
+          <div class="handle h-bl"></div><div class="handle h-bm"></div><div class="handle h-br"></div>
+        </div>
+        <div class="heart-actions" id="heartAct">
+          <button class="ha-btn" title="Rotate"><i class="fa fa-sync-alt"></i></button>
+          <button class="ha-btn" title="Lock"><i class="fa fa-lock"></i></button>
+          <button class="ha-btn" title="Duplicate"><i class="fa fa-clone"></i></button>
+          <button class="ha-btn" title="Delete"><i class="fa fa-trash"></i></button>
+          <button class="ha-btn" title="More"><i class="fa fa-ellipsis-h"></i></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /editor-layout -->
+
+<!-- ══════════ BOTTOM BAR ══════════ -->
+<div class="bottom-bar">
+  <!-- Left -->
+  <div class="d-flex align-items-center gap-2">
+    <button class="bb-btn"><i class="fa fa-sticky-note"></i> Notes</button>
+    <button class="bb-btn"><i class="fa fa-clock"></i> Timer</button>
+  </div>
+
+  <!-- Center -->
+  <div class="d-flex align-items-center gap-2">
+    <div class="page-thumb">
+      <div class="m-circle"></div>
+      <div class="m-rect"></div>
+      <div class="m-tri"></div>
+      <div class="m-pent"></div>
+      <div class="m-cross"></div>
+      <div class="m-para"></div>
+      <div class="m-arrow"></div>
+      <div class="m-heart"></div>
+    </div>
+    <button class="add-pg" title="Add page"><i class="fa fa-plus"></i></button>
+    <button class="add-pg" title="Page options" style="font-size:12px;"><i class="fa fa-chevron-down"></i></button>
+    <span class="pg-count">Pages &nbsp; 1 / 1</span>
+  </div>
+
+  <!-- Right -->
+  <div class="d-flex align-items-center gap-2">
+    <div class="zoom-wrap">
+      <button class="z-btn" id="zOut" title="Zoom out"><i class="fa fa-minus"></i></button>
+      <div class="zoom-track" id="zTrack">
+        <div class="zoom-fill" id="zFill"></div>
+        <div class="zoom-knob" id="zKnob"></div>
+      </div>
+      <button class="z-btn" id="zIn" title="Zoom in"><i class="fa fa-plus"></i></button>
+      <span class="zoom-pct" id="zPct">53%</span>
+    </div>
+    <button class="bb-btn"><i class="fa fa-th"></i> Pages</button>
+    <button class="bb-btn"><i class="fa fa-expand"></i></button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  /* ── sidebar active state ── */
+  function setActive(btn) {
+    document.querySelectorAll('.ib-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  /* ── shape selection ── */
+  function pickShape(el) {
+    document.querySelectorAll('.shape.sel').forEach(s => s.classList.remove('sel'));
+    el.classList.add('sel');
+    // deselect heart
+    document.getElementById('selBox').style.display = 'none';
+    document.getElementById('heartAct').style.display = 'none';
+  }
+
+  function pickHeart() {
+    document.querySelectorAll('.shape.sel').forEach(s => s.classList.remove('sel'));
+    document.getElementById('selBox').style.display = 'block';
+    document.getElementById('heartAct').style.display = 'flex';
+  }
+
+  document.getElementById('board').addEventListener('click', function(e) {
+    if (e.target === this) {
+      document.querySelectorAll('.shape.sel').forEach(s => s.classList.remove('sel'));
+      document.getElementById('selBox').style.display = 'none';
+      document.getElementById('heartAct').style.display = 'none';
+    }
+  });
+
+  /* ── zoom slider ── */
+  let zoomPct = 53;
+  const track = document.getElementById('zTrack');
+  const fill  = document.getElementById('zFill');
+  const knob  = document.getElementById('zKnob');
+  const pct   = document.getElementById('zPct');
+  let dragging = false;
+
+  function setZoom(v) {
+    zoomPct = Math.min(200, Math.max(10, v));
+    const p = (zoomPct - 10) / 190 * 100;
+    fill.style.width = p + '%';
+    knob.style.left  = p + '%';
+    pct.textContent  = Math.round(zoomPct) + '%';
+  }
+
+  track.addEventListener('mousedown', e => { dragging = true; drag(e); });
+  document.addEventListener('mousemove', e => { if (dragging) drag(e); });
+  document.addEventListener('mouseup', () => dragging = false);
+
+  function drag(e) {
+    const r = track.getBoundingClientRect();
+    const p = Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1);
+    setZoom(10 + p * 190);
+  }
+
+  document.getElementById('zOut').addEventListener('click', () => setZoom(zoomPct - 10));
+  document.getElementById('zIn' ).addEventListener('click', () => setZoom(zoomPct + 10));
+
+  setZoom(53);
+</script>
+</body>
+</html>
