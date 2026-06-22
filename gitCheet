@@ -1,0 +1,15 @@
+# First time only
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin <repo-url>
+git branch -M main
+git push -u origin main
+
+
+
+
+//After you've already connected the repo once, future updates are usually just:
+git add .
+git commit -m "Describe changes"
+git push
